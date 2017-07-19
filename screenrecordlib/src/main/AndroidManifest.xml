@@ -2,7 +2,7 @@
 
     package="com.yixia.screenrecordlib">
 
-    <application android:allowBackup="true"
+    <application
         android:supportsRtl="true">
 
     </application>
