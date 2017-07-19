@@ -2,8 +2,7 @@
 
     package="com.yixia.screenrecordlib">
 
-    <application
-        android:supportsRtl="true">
+    <application >
 
     </application>
 
