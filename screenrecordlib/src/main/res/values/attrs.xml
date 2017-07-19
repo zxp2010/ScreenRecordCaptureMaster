@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="UploadVideoProgressView">
+        <attr name="showCenterText" format="boolean" />
+        <attr name="directionOrient" format="integer"/>
+        <attr name="useBackground" format="boolean"/>
+    </declare-styleable>
+</resources>

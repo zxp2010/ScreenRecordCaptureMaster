@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="screen_record_black">#000000</color>
+    <color name="screen_record_blackColor">#000000</color>
+    <color name="screen_record_orangeColor">#FF6826</color>
+    <color name="screen_record_whiteColor">#FFFFFF</color>
+</resources>
