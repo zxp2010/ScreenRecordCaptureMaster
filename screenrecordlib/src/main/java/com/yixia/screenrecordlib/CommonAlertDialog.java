@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.support.annotation.ColorRes;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -219,7 +218,7 @@ public class CommonAlertDialog implements View.OnClickListener {
             return titleTextColor;
         }
 
-        public Builder setTitleTextColor(@ColorRes int titleTextColor) {
+        public Builder setTitleTextColor( int titleTextColor) {
             this.titleTextColor = mContext.getResources().getColor(titleTextColor);
             return this;
         }
@@ -237,7 +236,7 @@ public class CommonAlertDialog implements View.OnClickListener {
             return secondContentTextColor;
         }
 
-        public Builder setSecondContentTextColor(@ColorRes int contentTextColor) {
+        public Builder setSecondContentTextColor( int contentTextColor) {
             this.secondContentTextColor = mContext.getResources().getColor(contentTextColor);
             return this;
         }
@@ -265,7 +264,7 @@ public class CommonAlertDialog implements View.OnClickListener {
             return contentTextColor;
         }
 
-        public Builder setContentTextColor(@ColorRes int contentTextColor) {
+        public Builder setContentTextColor( int contentTextColor) {
             this.contentTextColor = mContext.getResources().getColor(contentTextColor);
             return this;
         }
@@ -293,7 +292,7 @@ public class CommonAlertDialog implements View.OnClickListener {
             return singleButtonTextColor;
         }
 
-        public Builder setSingleButtonTextColor(@ColorRes int singleButtonTextColor) {
+        public Builder setSingleButtonTextColor( int singleButtonTextColor) {
             this.singleButtonTextColor = mContext.getResources().getColor(singleButtonTextColor);
             return this;
         }
@@ -311,7 +310,7 @@ public class CommonAlertDialog implements View.OnClickListener {
             return leftButtonTextColor;
         }
 
-        public Builder setLeftButtonTextColor(@ColorRes int leftButtonTextColor) {
+        public Builder setLeftButtonTextColor( int leftButtonTextColor) {
             this.leftButtonTextColor = mContext.getResources().getColor(leftButtonTextColor);
             return this;
         }
@@ -329,7 +328,7 @@ public class CommonAlertDialog implements View.OnClickListener {
             return rightButtonTextColor;
         }
 
-        public Builder setRightButtonTextColor(@ColorRes int rightButtonTextColor) {
+        public Builder setRightButtonTextColor( int rightButtonTextColor) {
             this.rightButtonTextColor = mContext.getResources().getColor(rightButtonTextColor);
             return this;
         }
