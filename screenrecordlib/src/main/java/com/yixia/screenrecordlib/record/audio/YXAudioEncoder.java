@@ -71,7 +71,11 @@ public class YXAudioEncoder {
     }
 
     public void stop() {
-        mAudioEncoder.stop();
+        if(mAudioEncoder != null) {
+            mAudioEncoder.stop();
+            mAudioEncoder.release();
+            mAudioEncoder = null;
+        }
         isEncoding = false;
         mPrevOutputPTSUs = 0;
     }

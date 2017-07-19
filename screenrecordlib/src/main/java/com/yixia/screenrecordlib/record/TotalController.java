@@ -35,6 +35,13 @@ public class TotalController {
         return mTotalController;
     }
 
+    public void initEncodeThread(){
+        mVideoHandlerThread = new VideoHandlerThread("Video Recorder Thread", THREAD_PRIORITY_AUDIO);
+        mVideoHandlerThread.start();
+        mAudioHandlerThread = new AudioHandlerThread("Audio Recorder Thread", THREAD_PRIORITY_AUDIO);
+        mAudioHandlerThread.start();
+    }
+
     /**
      * 准备-》》》此时就该开启
      * Intent captureIntent = mMediaProjectionManager.createScreenCaptureIntent();
@@ -43,10 +50,6 @@ public class TotalController {
     public void prepare(String filePath) {
         mYixiaMuxerWrapper = YXMuxerWrapper.getInstance();
         mYixiaMuxerWrapper.prepar(filePath);
-        mVideoHandlerThread = new VideoHandlerThread("Video Recorder Thread", THREAD_PRIORITY_AUDIO);
-        mVideoHandlerThread.start();
-        mAudioHandlerThread = new AudioHandlerThread("Audio Recorder Thread", THREAD_PRIORITY_AUDIO);
-        mAudioHandlerThread.start();
     }
 
     /**
@@ -78,11 +81,18 @@ public class TotalController {
         mVideoHandlerThread.stopRecording();
         mAudioHandlerThread.stopRecording();
         mYixiaMuxerWrapper.stopMuxer();
-        mVideoHandlerThread.quitSafely();
-        mAudioHandlerThread.quitSafely();
         mYixiaMuxerWrapper = null;
-        mVideoHandlerThread = null;
-        mAudioHandlerThread = null;
+    }
+
+    public void releaseThread(){
+        if(mVideoHandlerThread != null) {
+            mVideoHandlerThread.quit();
+            mVideoHandlerThread = null;
+        }
+        if(mAudioHandlerThread != null) {
+            mAudioHandlerThread.quit();
+            mAudioHandlerThread = null;
+        }
     }
 
     /**

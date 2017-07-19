@@ -7,6 +7,7 @@ import android.os.HandlerThread;
 import android.os.Message;
 
 import com.yixia.screenrecordlib.record.YXMuxerWrapper;
+import com.yixia.screenrecordlib.util.RecordScreenLogUtil;
 
 
 /**
@@ -39,6 +40,7 @@ public class VideoHandlerThread extends HandlerThread implements Handler.Callbac
     @Override
     protected void onLooperPrepared() {
         super.onLooperPrepared();
+        RecordScreenLogUtil.i("loop", "initial the handler");
         mHandler = new Handler(getLooper(), this);
     }
 

@@ -59,7 +59,7 @@ public class AudioHandlerThread extends HandlerThread implements Handler.Callbac
                 break;
             case MSG_RECORD_STOP:
                 //yixiaMicRecorder.stopRecording();
-                mAudioEncoder = null;
+                mAudioEncoder.stop();
                 break;
         }
         return true;

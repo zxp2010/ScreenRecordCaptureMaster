@@ -7,7 +7,7 @@ import android.util.Log;
  */
 
 public class RecordScreenLogUtil {
-    public static boolean isLog = false;
+    public static boolean isLog = true;
 
     public static void i(String tag, String msg) {
         if (isLog)

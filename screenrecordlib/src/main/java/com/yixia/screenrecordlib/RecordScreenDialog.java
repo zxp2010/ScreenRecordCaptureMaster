@@ -1,6 +1,5 @@
 package com.yixia.screenrecordlib;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +15,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yixia.screenrecordlib.record.TotalController;
@@ -27,6 +27,7 @@ import com.yixia.screenrecordlib.view.RecordTipsView;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -51,6 +52,7 @@ public class RecordScreenDialog extends Dialog implements View.OnClickListener {
     private File mFile;
     private String mFilePath;
 
+    private TextView mProgressTime;
     private ProgressButtonView mProgressButtonView;
     private ImageView mScreenShotImg;
     private ImageView mCancelImg;
@@ -78,6 +80,7 @@ public class RecordScreenDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_record_screen_view);
 
+        mProgressTime = (TextView) findViewById(R.id.record_time_tv);
         mProgressButtonView = (ProgressButtonView) findViewById(R.id.record_progress_button_view);
         mScreenShotImg = (ImageView) findViewById(R.id.record_screenshot);
         mCancelImg = (ImageView) findViewById(R.id.record_cancel);
@@ -146,6 +149,7 @@ public class RecordScreenDialog extends Dialog implements View.OnClickListener {
         mFile = new File(parent.getAbsolutePath() + File.separator + "weibo" + new Date().getTime()
                 + ".mp4");
         mTotalController = TotalController.getInstance();
+        mTotalController.initEncodeThread();
         setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
@@ -288,6 +292,12 @@ public class RecordScreenDialog extends Dialog implements View.OnClickListener {
         isStartRecord = false;
     }
 
+    public void releae(){
+        if(mTotalController != null) {
+            mTotalController.releaseThread();
+        }
+    }
+
     /**
      * 设置显示时间
      *
@@ -304,6 +314,9 @@ public class RecordScreenDialog extends Dialog implements View.OnClickListener {
      */
     private void setRecordProgress(int time) {
 //        mRecordProgress.setProgress(time);
+        int seconds = time % 60;
+        int minutes = (time /60) % 60;
+        mProgressTime.setText(String.format(Locale.SIMPLIFIED_CHINESE, "%02d:%02d", minutes, seconds));
         mProgressButtonView.setCurrentValues(time);
     }
 

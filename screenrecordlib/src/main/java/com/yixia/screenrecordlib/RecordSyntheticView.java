@@ -50,6 +50,14 @@ public class RecordSyntheticView extends FrameLayout {
         init(context, attrs);
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if(mRecordDialog != null) {
+            mRecordDialog.releae();
+        }
+    }
+
     private void init(Context context, AttributeSet attrs) {
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
