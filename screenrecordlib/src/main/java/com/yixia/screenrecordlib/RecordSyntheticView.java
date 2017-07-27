@@ -18,7 +18,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.yixia.screenrecordlib.record.audio.AudioDataBean;
 import com.yixia.screenrecordlib.record.callback.IRecordShotCallback;
+import com.yixia.screenrecordlib.util.RecordScreenLogUtil;
+
+import java.util.TimerTask;
 
 /**
  * 录屏按钮以及视频上传进度条
@@ -35,7 +39,7 @@ public class RecordSyntheticView extends FrameLayout {
     private RecordScreenDialog mRecordDialog;
     private YZBRecordScreenDialog mYZBRecordScreenDialog;
 
-    private RecordScreenDialog.IShareLivePlayer mIShareLivePlayer;
+    private IShareLivePlayer mIShareLivePlayer;
     private IRecordShotCallback mCallback;
 
     private boolean isYizhibo = true;
@@ -171,6 +175,21 @@ public class RecordSyntheticView extends FrameLayout {
         mRecordDialog.show();
     }
 
+    /**
+     * 设置音频数据
+     * <p>从so中获取的数据封装成{@link AudioDataBean}对象</p>
+     *
+     * @param audioDataBean
+     */
+    public void putAudioData(final AudioDataBean audioDataBean){
+        if (mYZBRecordScreenDialog == null) {
+            mYZBRecordScreenDialog.putAudioData(audioDataBean);
+        }
+        if (mRecordDialog == null) {
+            mRecordDialog.putAudioData(audioDataBean);
+        }
+    }
+
     public void setCallback(IRecordShotCallback callback) {
         mCallback = callback;
     }
@@ -180,7 +199,7 @@ public class RecordSyntheticView extends FrameLayout {
      *
      * @param IShareLivePlayer
      */
-    public void setIShareLivePlayer(RecordScreenDialog.IShareLivePlayer IShareLivePlayer) {
+    public void setIShareLivePlayer(IShareLivePlayer IShareLivePlayer) {
         mIShareLivePlayer = IShareLivePlayer;
     }
 

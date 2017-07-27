@@ -54,7 +54,7 @@ public class YZBRecordScreenDialog extends Dialog implements View.OnClickListene
     private MediaProjection mMediaProjection;
     private boolean isAudience;
     private boolean isStartRecord = false;
-    private RecordScreenDialog.IShareLivePlayer mIShareLivePlayer;
+    private IShareLivePlayer mIShareLivePlayer;
 
     private ProgressBar mProgressBar;
     private ImageView mRecordStateImg;
@@ -108,7 +108,7 @@ public class YZBRecordScreenDialog extends Dialog implements View.OnClickListene
         });
     }
 
-    private void initFile(){
+    private void initFile() {
         File parent = new File(TextUtils.isEmpty(mFilePath) ? Environment.getExternalStorageDirectory() + File.separator
                 + Environment.DIRECTORY_DCIM + File.separator + "weibo" : mFilePath);
         if (!parent.exists()) {
@@ -134,7 +134,7 @@ public class YZBRecordScreenDialog extends Dialog implements View.OnClickListene
                     public void run() {
                         dismiss();
                     }
-                },100);
+                }, 100);
                 return;
             }
             mTotalController.prepare(mFile.getAbsolutePath());
@@ -155,7 +155,7 @@ public class YZBRecordScreenDialog extends Dialog implements View.OnClickListene
                 public void run() {
                     dismiss();
                 }
-            },200);
+            }, 200);
         }
     }
 
@@ -192,25 +192,28 @@ public class YZBRecordScreenDialog extends Dialog implements View.OnClickListene
         this.isAudience = isAudience;
     }
 
+    /**
+     * 设置音频数据
+     * <p>从so中获取的数据封装成{@link AudioDataBean}对象</p>
+     *
+     * @param audioDataBean
+     */
+    public void putAudioData(final AudioDataBean audioDataBean) {
+        if (isStartRecord) {
+            if (mIShareLivePlayer != null) {
+                RecordScreenLogUtil.i("audioInfo", "put audio data : " + audioDataBean);
+                if (audioDataBean != null && mTotalController != null) {
+                    mTotalController.putAudioData(audioDataBean.getRawBuffer(), audioDataBean.getLength());
+                }
+            }
+        }
+    }
+
     public void startRecord() {
         isShowOtherViews(true);
         isStartRecord = true;
         if (mTotalController != null && mTimer == null && mFile != null) {
             mTotalController.start(getContext(), mMediaProjection, isAudience);
-            new Thread(new TimerTask() {
-                @Override
-                public void run() {
-                    if (isStartRecord) {
-                        if (mIShareLivePlayer != null) {
-                            AudioDataBean audioDataBean = mIShareLivePlayer.getAudioData();
-                            RecordScreenLogUtil.i("audioInfo", "put audio data : " + audioDataBean);
-                            if (audioDataBean != null) {
-                                mTotalController.putAudioData(audioDataBean.getRawBuffer(), audioDataBean.getLength());
-                            }
-                        }
-                    }
-                }
-            }).start();
             if (mIShareLivePlayer != null) {
                 mIShareLivePlayer.setIsMediaDataPutOut(true);
             }
@@ -270,11 +273,11 @@ public class YZBRecordScreenDialog extends Dialog implements View.OnClickListene
         stopRecordThread();
         if (mTimer == null) return;
         if (mCallback != null) {
-            if(!isRestart) {
+            if (!isRestart) {
                 MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
                 mediaMetadataRetriever.setDataSource(mFile.getAbsolutePath());
                 mCallback.onComplete(1, mFile.getAbsolutePath(), mCurrentTime, mediaMetadataRetriever.getFrameAtTime(0));
-            }else{
+            } else {
                 deleteFile(mFile);
                 mCallback.onRestartRecord();
             }
@@ -391,7 +394,7 @@ public class YZBRecordScreenDialog extends Dialog implements View.OnClickListene
      *
      * @param IShareLivePlayer
      */
-    public void setIShareLivePlayer(RecordScreenDialog.IShareLivePlayer IShareLivePlayer) {
+    public void setIShareLivePlayer(IShareLivePlayer IShareLivePlayer) {
         mIShareLivePlayer = IShareLivePlayer;
     }
 }

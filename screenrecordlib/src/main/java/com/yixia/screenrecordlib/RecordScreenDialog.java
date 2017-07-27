@@ -175,7 +175,7 @@ public class RecordScreenDialog extends Dialog implements View.OnClickListener {
                     public void run() {
                         dismiss();
                     }
-                },100);
+                }, 100);
                 return;
             }
             mTotalController.prepare(mFile.getAbsolutePath());
@@ -189,7 +189,7 @@ public class RecordScreenDialog extends Dialog implements View.OnClickListener {
                 public void run() {
                     dismiss();
                 }
-            },200);
+            }, 200);
         }
     }
 
@@ -204,25 +204,28 @@ public class RecordScreenDialog extends Dialog implements View.OnClickListener {
         this.isAudience = isAudience;
     }
 
+    /**
+     * 设置音频数据
+     * <p>从so中获取的数据封装成{@link AudioDataBean}对象</p>
+     *
+     * @param audioDataBean
+     */
+    public void putAudioData(final AudioDataBean audioDataBean) {
+        if (isStartRecord) {
+            if (mIShareLivePlayer != null) {
+                RecordScreenLogUtil.i("audioInfo", "put audio data : " + audioDataBean);
+                if (audioDataBean != null && mTotalController != null) {
+                    mTotalController.putAudioData(audioDataBean.getRawBuffer(), audioDataBean.getLength());
+                }
+            }
+        }
+    }
+
     public void startRecord() {
         isShowOtherViews(false);
         isStartRecord = true;
         if (mTotalController != null && mTimer == null && mFile != null) {
             mTotalController.start(getContext(), mMediaProjection, isAudience);
-            new Thread(new TimerTask() {
-                @Override
-                public void run() {
-                    if (isStartRecord) {
-                        if (mIShareLivePlayer != null) {
-                            AudioDataBean audioDataBean = mIShareLivePlayer.getAudioData();
-                            RecordScreenLogUtil.i("audioInfo", "put audio data : " + audioDataBean);
-                            if (audioDataBean != null) {
-                                mTotalController.putAudioData(audioDataBean.getRawBuffer(), audioDataBean.getLength());
-                            }
-                        }
-                    }
-                }
-            }).start();
             if (mIShareLivePlayer != null) {
                 mIShareLivePlayer.setIsMediaDataPutOut(true);
             }
@@ -246,7 +249,7 @@ public class RecordScreenDialog extends Dialog implements View.OnClickListener {
                                     public void run() {
                                         dismiss();
                                     }
-                                },200);
+                                }, 200);
                             }
                         }
                     });
@@ -292,8 +295,8 @@ public class RecordScreenDialog extends Dialog implements View.OnClickListener {
         isStartRecord = false;
     }
 
-    public void releae(){
-        if(mTotalController != null) {
+    public void releae() {
+        if (mTotalController != null) {
             mTotalController.releaseThread();
         }
     }
@@ -315,7 +318,7 @@ public class RecordScreenDialog extends Dialog implements View.OnClickListener {
     private void setRecordProgress(int time) {
 //        mRecordProgress.setProgress(time);
         int seconds = time % 60;
-        int minutes = (time /60) % 60;
+        int minutes = (time / 60) % 60;
         mProgressTime.setText(String.format(Locale.SIMPLIFIED_CHINESE, "%02d:%02d", minutes, seconds));
         mProgressButtonView.setCurrentValues(time);
     }
@@ -412,22 +415,5 @@ public class RecordScreenDialog extends Dialog implements View.OnClickListener {
      */
     public void setIShareLivePlayer(IShareLivePlayer IShareLivePlayer) {
         mIShareLivePlayer = IShareLivePlayer;
-    }
-
-    public interface IShareLivePlayer {
-        /**
-         * <p>SharedLivePlayer.getSharedInstance().setIsMediaDataPutOut(isCallback);</p>
-         *
-         * @param isCallback
-         */
-        void setIsMediaDataPutOut(boolean isCallback);
-
-        /**
-         * 设置音频数据
-         * <p>从so中获取的数据封装成{@link AudioDataBean}对象</p>
-         *
-         * @return
-         */
-        AudioDataBean getAudioData();
     }
 }
