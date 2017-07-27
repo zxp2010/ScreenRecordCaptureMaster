@@ -20,4 +20,6 @@ public interface IRecordShotCallback {
     void failed();
 
     void notSaveFile();
+
+    void onRestart();
 }

@@ -12,7 +12,7 @@
     <item android:id="@android:id/progress">
 
         <clip>
-            <color android:color="#F9743A" />
+            <color android:color="#E25F57" />
         </clip>
     </item>
 

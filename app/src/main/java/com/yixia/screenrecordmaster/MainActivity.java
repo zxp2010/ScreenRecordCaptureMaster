@@ -15,9 +15,6 @@ import com.yixia.screenrecordlib.RecordSyntheticView;
 import com.yixia.screenrecordlib.record.audio.AudioDataBean;
 import com.yixia.screenrecordlib.record.callback.IRecordShotCallback;
 
-import java.nio.ByteBuffer;
-import java.util.TimerTask;
-
 public class MainActivity extends Activity {
 
     private RecordSyntheticView mRecordSyntheticView;
@@ -53,6 +50,11 @@ public class MainActivity extends Activity {
 
             @Override
             public void notSaveFile() {
+
+            }
+
+            @Override
+            public void onRestart() {
 
             }
         });

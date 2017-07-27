@@ -33,9 +33,12 @@ public class RecordSyntheticView extends FrameLayout {
     //系统提供的录屏工具
     private MediaProjectionManager mMediaProjectionManager;
     private RecordScreenDialog mRecordDialog;
+    private YZBRecordScreenDialog mYZBRecordScreenDialog;
 
     private RecordScreenDialog.IShareLivePlayer mIShareLivePlayer;
     private IRecordShotCallback mCallback;
+
+    private boolean isYizhibo = true;
 
     public RecordSyntheticView(Context context) {
         this(context, null);
@@ -79,6 +82,15 @@ public class RecordSyntheticView extends FrameLayout {
         });
     }
 
+    /**
+     * 标志是否显示一直播的弹窗
+     *
+     * @param isYizhibo
+     */
+    public void setYizhibo(boolean isYizhibo){
+        this.isYizhibo = isYizhibo;
+    }
+
     private void requestRecordPermission() {
         if (mMediaProjectionManager == null) {
             mMediaProjectionManager = (MediaProjectionManager) getContext().getSystemService(Service.MEDIA_PROJECTION_SERVICE);
@@ -103,8 +115,36 @@ public class RecordSyntheticView extends FrameLayout {
             if (mediaProjection == null) {
                 return;
             }
+            if(isYizhibo){
+                showYZBRecordDialog(mediaProjection, filePath, isRecordAudio);
+                return;
+            }
             showRecordDialog(mediaProjection, filePath, isRecordAudio);
         }
+    }
+
+    private void showYZBRecordDialog(MediaProjection mediaProjection, String path, boolean isRecordAudio) {
+        if (mYZBRecordScreenDialog == null) {
+            mYZBRecordScreenDialog = new YZBRecordScreenDialog(getContext(), R.style.record_dialog);
+            mYZBRecordScreenDialog.setFilePath(path);
+            Window window = mYZBRecordScreenDialog.getWindow();
+            window.setGravity(Gravity.BOTTOM);
+            WindowManager.LayoutParams layoutParams = window.getAttributes();
+            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+            window.setAttributes(layoutParams);
+            mYZBRecordScreenDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+//                    showSystemUI();
+                }
+            });
+        }
+        //第二个参数表述是否录制音频数据
+        mYZBRecordScreenDialog.setActivityResult(mediaProjection, isRecordAudio);
+        mYZBRecordScreenDialog.setIShareLivePlayer(mIShareLivePlayer);
+        mYZBRecordScreenDialog.setCallback(mCallback);
+        mYZBRecordScreenDialog.show();
     }
 
     private void showRecordDialog(MediaProjection mediaProjection, String filePath, boolean isRecordAudio) {

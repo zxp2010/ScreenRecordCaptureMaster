@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/record_dialog_bg"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:paddingTop="20dp">
+
+    <com.yixia.screenrecordlib.view.RecordTipsView
+        android:id="@+id/record_tips_view"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/yzb_record_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/shape_record_time_left"
+                android:textSize="10sp"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/yzb_record_state_btn"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/iv_screen_close_default"/>
+
+        <ImageView
+            android:id="@+id/yzb_record_restart_img"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/iv_screen_close_default"/>
+
+        <ImageView
+            android:id="@+id/yzb_record_cancel_img"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/iv_screen_close_default"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/yzb_record_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#33000000"
+        android:max="180"
+        android:progressDrawable="@drawable/record_progressbar"/>
+</LinearLayout>
