@@ -45,11 +45,13 @@ public class RecordSyntheticView extends FrameLayout {
     private boolean isYizhibo = true;
 
     public RecordSyntheticView(Context context) {
-        this(context, null);
+        super(context, null);
+        init(context, null);
     }
 
     public RecordSyntheticView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        init(context, attrs);
     }
 
     public RecordSyntheticView(Context context, AttributeSet attrs, int defStyleAttr) {

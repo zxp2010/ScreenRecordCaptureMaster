@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.yixia.screenrecordlib.IShareLivePlayer;
 import com.yixia.screenrecordlib.RecordScreenDialog;
 import com.yixia.screenrecordlib.RecordSyntheticView;
 import com.yixia.screenrecordlib.record.audio.AudioDataBean;
@@ -64,17 +65,10 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mRecordSyntheticView.onActivityResult(requestCode, resultCode, data, "", false);
-        mRecordSyntheticView.setIShareLivePlayer(new RecordScreenDialog.IShareLivePlayer() {
+        mRecordSyntheticView.setIShareLivePlayer(new IShareLivePlayer() {
             @Override
             public void setIsMediaDataPutOut(boolean isCallback) {
                 //SharedLivePlayer.getSharedInstance().setIsMediaDataPutOut(isCallback);
-            }
-
-            @Override
-            public AudioDataBean getAudioData() {
-                //从so中获取的直播音频信息
-                //sample
-                return null;
             }
         });
     }
