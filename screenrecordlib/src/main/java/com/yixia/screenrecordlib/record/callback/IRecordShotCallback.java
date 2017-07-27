@@ -21,5 +21,5 @@ public interface IRecordShotCallback {
 
     void notSaveFile();
 
-    void onRestart();
+    void onRestartRecord();
 }

@@ -276,7 +276,7 @@ public class YZBRecordScreenDialog extends Dialog implements View.OnClickListene
                 mCallback.onComplete(1, mFile.getAbsolutePath(), mCurrentTime, mediaMetadataRetriever.getFrameAtTime(0));
             }else{
                 deleteFile(mFile);
-                mCallback.onRestart();
+                mCallback.onRestartRecord();
             }
         }
         stopTimer();
