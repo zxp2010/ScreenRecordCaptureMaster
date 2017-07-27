@@ -20,9 +20,6 @@ import android.widget.Toast;
 
 import com.yixia.screenrecordlib.record.audio.AudioDataBean;
 import com.yixia.screenrecordlib.record.callback.IRecordShotCallback;
-import com.yixia.screenrecordlib.util.RecordScreenLogUtil;
-
-import java.util.TimerTask;
 
 /**
  * 录屏按钮以及视频上传进度条
@@ -62,7 +59,7 @@ public class RecordSyntheticView extends FrameLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if(mRecordDialog != null) {
+        if (mRecordDialog != null) {
             mRecordDialog.releae();
         }
     }
@@ -93,7 +90,7 @@ public class RecordSyntheticView extends FrameLayout {
      *
      * @param isYizhibo
      */
-    public void setYizhibo(boolean isYizhibo){
+    public void setYizhibo(boolean isYizhibo) {
         this.isYizhibo = isYizhibo;
     }
 
@@ -110,23 +107,22 @@ public class RecordSyntheticView extends FrameLayout {
     /**
      * 接受录屏权限请求结果，授权后开始录屏
      *
-     * @param requestCode
      * @param resultCode
      * @param data
      * @param isRecordAudio 是否录制音频数据
      */
-    public void onActivityResult(int requestCode, int resultCode, Intent data, String filePath, boolean isRecordAudio) {
-        if (requestCode == REQUEST_CODE_CAPTURE_SCREEN) {
-            MediaProjection mediaProjection = mMediaProjectionManager.getMediaProjection(resultCode, data);
-            if (mediaProjection == null) {
-                return;
-            }
-            if(isYizhibo){
-                showYZBRecordDialog(mediaProjection, filePath, isRecordAudio);
-                return;
-            }
-            showRecordDialog(mediaProjection, filePath, isRecordAudio);
+    public void onActivityResult(int resultCode, Intent data,
+                                 String filePath, boolean isRecordAudio) {
+        if (mMediaProjectionManager == null) {
+            return;
         }
+        MediaProjection mediaProjection = mMediaProjectionManager.getMediaProjection(resultCode, data);
+        if (isYizhibo) {
+            showYZBRecordDialog(mediaProjection, filePath, isRecordAudio);
+            return;
+        }
+        showRecordDialog(mediaProjection, filePath, isRecordAudio);¬
+
     }
 
     private void showYZBRecordDialog(MediaProjection mediaProjection, String path, boolean isRecordAudio) {
@@ -183,7 +179,7 @@ public class RecordSyntheticView extends FrameLayout {
      *
      * @param audioDataBean
      */
-    public void putAudioData(final AudioDataBean audioDataBean){
+    public void putAudioData(final AudioDataBean audioDataBean) {
         if (mYZBRecordScreenDialog == null) {
             mYZBRecordScreenDialog.putAudioData(audioDataBean);
         }

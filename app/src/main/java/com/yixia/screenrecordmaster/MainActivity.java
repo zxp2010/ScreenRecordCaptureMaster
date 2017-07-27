@@ -64,13 +64,15 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mRecordSyntheticView.onActivityResult(requestCode, resultCode, data, "", false);
-        mRecordSyntheticView.setIShareLivePlayer(new IShareLivePlayer() {
-            @Override
-            public void setIsMediaDataPutOut(boolean isCallback) {
-                //SharedLivePlayer.getSharedInstance().setIsMediaDataPutOut(isCallback);
-            }
-        });
+        if (requestCode == RecordSyntheticView.REQUEST_CODE_CAPTURE_SCREEN) {
+            mRecordSyntheticView.onActivityResult(resultCode, data, "", false);
+            mRecordSyntheticView.setIShareLivePlayer(new IShareLivePlayer() {
+                @Override
+                public void setIsMediaDataPutOut(boolean isCallback) {
+                    //SharedLivePlayer.getSharedInstance().setIsMediaDataPutOut(isCallback);
+                }
+            });
+        }
     }
 
     // This snippet hides the system bars.
